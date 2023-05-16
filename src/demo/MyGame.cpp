@@ -2,10 +2,10 @@
 #include "MyGame.h"
 #include <cmath>
 
-//global var for enemy atm not secure
-EnemyAI enemy = EnemyAI(0, 0, 0.1, false);
 
-MyGame::MyGame() : AbstractGame(), score(0), lives(3), numKeys(5), gameWon(false), box(5, 5, 30, 30), enemyBox(5,5,30,30)
+
+MyGame::MyGame() 
+	: AbstractGame(), score(0), lives(3), numKeys(5), gameWon(false), box(5, 5, 30, 30), enemyBox(5,5,30,30), enemy(0,0,0.1,false,box)
 {
 	TTF_Font * font = ResourceManager::loadFont("res/fonts/arial.ttf", 72);
 	gfx->useFont(font);
@@ -55,9 +55,7 @@ void MyGame::handleKeyEvents() {
 
 void MyGame::update()
 {
-	float tempBoxX = box.x;
-	float tempBoxY = box.y;
-
+	
 
 
 	box.x += velocity.x;
@@ -78,7 +76,7 @@ void MyGame::update()
 		gameWon = true;
 	}
 	
-	enemy.Update(&tempBoxX,&tempBoxY);
+	enemy.Update();
 }
 
 void MyGame::render() {

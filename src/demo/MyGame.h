@@ -1,6 +1,6 @@
 #ifndef __TEST_GAME_H__
 #define __TEST_GAME_H__
-
+#include "../engine/custom/MyEngineSystem.h"
 #include "../engine/AbstractGame.h"
 
 
@@ -12,6 +12,7 @@ struct GameKey {
 
 class MyGame : public AbstractGame {
 private:
+	EnemyAI enemy;
 	Rect box;
 	Rect enemyBox;
 	float playerX;
