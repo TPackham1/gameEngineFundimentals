@@ -10,16 +10,18 @@ class EnemyAI
 
 
 		public:
-			EnemyAI(float dx, float dy, float attackRange, bool playerDead); EnemyAI();
-			void Update(float *playerX,float *playerY);
-			void MoveToPlayer(float *playerX,float *playerY);
-			
-		private:
-			float m_x;
-			float m_y;
+			EnemyAI(float dx, float dy, float attackRange, bool playerDead); 
+			void Update();
 			float m_speed;
 			float m_dx;
 			float m_dy;
+			float m_x;
+			float m_y;
+			
+		private:
+			//Rect m_player;
+			
+			Behavior* m_RootBehavior;
 			float m_attackRange;
 			bool m_playerDead;
 	};
