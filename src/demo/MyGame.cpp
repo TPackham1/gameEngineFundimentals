@@ -5,7 +5,7 @@
 
 
 MyGame::MyGame() 
-	: AbstractGame(), score(0), lives(3), numKeys(5), gameWon(false), box(5, 5, 30, 30), enemyBox(box), enemy(0,0,0.1,false)
+	: AbstractGame(), score(0), lives(3), numKeys(5), gameWon(false), box(5, 5, 30, 30), enemyBox(box), enemy()
 {
 	TTF_Font * font = ResourceManager::loadFont("res/fonts/arial.ttf", 72);
 	gfx->useFont(font);

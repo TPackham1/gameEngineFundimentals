@@ -5,15 +5,14 @@
 #include "MyEngineSystem.cpp"
 using namespace std;
 
-class Behvior;
 
-class MySytemEngine
+class MyEngineSystem
 	{
 		friend class XCube2Engine;
 
 
 		public:
-			MySytemEngine(float dx, float dy, float attackRange, bool playerDead);
+			MyEngineSystem();
 			void Update();
 			float m_speed;
 			float m_dx;

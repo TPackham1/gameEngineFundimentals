@@ -1,4 +1,3 @@
-#include "custom/MyEngineSystem.h"
 #include "AbstractGame.h"
 
 AbstractGame::AbstractGame() : running(true), paused(false), gameTime(0.0) {

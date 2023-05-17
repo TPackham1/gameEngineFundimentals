@@ -38,7 +38,7 @@ private:
 class MoveToPlayer : public Behavior 
 {
 	public:
-		MoveToPlayer(MySytemEngine* enemy) : m_Enemy(enemy) {}
+		MoveToPlayer(MyEngineSystem* enemy) : m_Enemy(*enemy) {}
 		
 	BehaviorStatus Execute() override {
 		// Implement movement logic to move towards the player
@@ -54,11 +54,11 @@ class MoveToPlayer : public Behavior
 		return BehaviorStatus::Running;
 	}
 private:
-	MySytemEngine* m_Enemy;
+	MyEngineSystem m_Enemy;
 
 	bool IsPlayerInRange() {
-		float distance = std::sqrt(m_Enemy->m_dx * m_Enemy->m_dx + m_Enemy->m_dy * m_Enemy->m_dy);
-		if (distance <= m_Enemy->m_attackRange)
+		float distance = std::sqrt(m_Enemy.m_dx * m_Enemy.m_dx + m_Enemy.m_dy * m_Enemy.m_dy);
+		if (distance <= m_Enemy.m_attackRange)
 		{
 			std::cout << "Tom Packham CI517 2022" << std::endl;
 			return true;
@@ -68,72 +68,45 @@ private:
 
 	void MoveTowardsPlayer() 
 	{
-		float distance = std::sqrt(m_Enemy->m_dx * m_Enemy->m_dx + m_Enemy->m_dy * m_Enemy->m_dy);
-		float directionX = m_Enemy->m_dx / distance;
-		float directionY = m_Enemy->m_dy / distance;
-		m_Enemy->m_x += directionX * m_Enemy->m_speed;
-		m_Enemy->m_y += directionY * m_Enemy->m_speed;
+		float distance = std::sqrt(m_Enemy.m_dx * m_Enemy.m_dx + m_Enemy.m_dy * m_Enemy.m_dy);
+		float directionX = m_Enemy.m_dx / distance;
+		float directionY = m_Enemy.m_dy / distance;
+		m_Enemy.m_x += directionX * m_Enemy.m_speed;
+		m_Enemy.m_y += directionY * m_Enemy.m_speed;
 	}
 
-	class AttackPlayer : public Behavior {
-	public:
-		BehaviorStatus Execute() override {
-			// Implement attack logic on the player
-			return BehaviorStatus::Success;
-		}
-	};
+	
 	
 };	
+class AttackPlayer : public Behavior {
+public:
+	BehaviorStatus Execute() override {
+		// Implement attack logic on the player
+		return BehaviorStatus::Success;
+	}
+};
 
-	/*void EnemyAI::LogicMoveToPlayer(float *playerX, float *playerY)
-	{
-
-		float distance = std::sqrt(m_dx * m_dx + m_dy * m_dy);
-		if (distance <= m_attackRange)
-		{
-			float directionX = m_dx / distance;
-			float directionY = m_dy / distance;
-
-			m_x += directionX * m_speed;
-			m_y += directionY * m_speed;
-			std::cout << "Enemy moves towards player." << std::endl;
-			std::cout << "New position: (" << m_x << ", " << m_y << ")" << std::endl;
-		}
-		else
-		{
-			float directionX = m_dx / distance;
-			float directionY = m_dy / distance;
-
-			m_x += directionX * m_speed;
-			m_y += directionY * m_speed;
-			std::cout << "Enemy moves towards player." << std::endl;
-			std::cout << "New position: (" << m_x << ", " << m_y << ")" << std::endl;
-		}
-
-
-
-	};*/
 
 //ai contructor sets up the behaviour tree
-MySytemEngine::MySytemEngine(float dx, float dy, float attackRange, bool playerDead)
+MyEngineSystem::MyEngineSystem()
 {
 	Behavior* m_RootBehavior = nullptr;
 
 	//m_player = player;
 	m_x = getRandom(0, 750) + 1;
 	m_y = getRandom(0, 550) + 1;
-	m_dx = dx;
-	m_dy = dy;
+	m_dx = 0;
+	m_dy = 0;
 	m_speed = 2.5;
-	m_attackRange = attackRange;
-	m_playerDead = playerDead;
+	m_attackRange = 0.1;
+	m_playerDead = false;
 
 
 	
 	//setting up behaviours
 	MoveToPlayer* moveToPlayer = new MoveToPlayer(this);
-	//Behavior* attackPlayer = new AttackPlayer(this);
-	std::vector<Behavior*> sequenceBehaviors = { moveToPlayer };
+	AttackPlayer* attackPlayer = new AttackPlayer();
+	std::vector<Behavior*> sequenceBehaviors = { moveToPlayer , attackPlayer};
 
 
 	Behavior* sequence = new Sequence(sequenceBehaviors);
@@ -145,7 +118,7 @@ MySytemEngine::MySytemEngine(float dx, float dy, float attackRange, bool playerD
 
 
 // function to update the enemy instance
-void MySytemEngine::Update()
+void MyEngineSystem::Update()
 {
 	// Execute the behavior tree
 	BehaviorStatus status = m_RootBehavior->Execute();

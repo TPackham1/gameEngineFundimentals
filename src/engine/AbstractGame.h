@@ -17,7 +17,7 @@ class AbstractGame {
 		std::shared_ptr<AudioEngine> sfx;
 		std::shared_ptr<EventEngine> eventSystem;
 		std::shared_ptr<PhysicsEngine> physics;
-        std::shared_ptr<MySytemEngine> mySystem;//changed from MySytemEngine class to Enemy class
+        std::shared_ptr<MyEngineSystem> mySystem;//changed from MySytemEngine class to Enemy class
 
 		/* Main loop control */
 		bool running;

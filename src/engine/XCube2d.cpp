@@ -64,7 +64,7 @@ XCube2Engine::XCube2Engine() {
 
 	physicsInstance = std::shared_ptr<PhysicsEngine>(new PhysicsEngine());
 
-    myEngineSystemInstance = std::shared_ptr<EnemyAI>(new EnemyAI(0, 0, 0.1, false));
+    myEngineSystemInstance = std::shared_ptr<MyEngineSystem>(new MyEngineSystem());
 
 #ifdef __DEBUG
     debug("MyEngineSystem() successful");
