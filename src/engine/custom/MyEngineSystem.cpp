@@ -4,54 +4,54 @@
 #include <random>
 #include "../GameMath.h"
 
-enum class BehaviorStatus {
+enum class BehaviourStatus {
 	Success,
 	Failure,
 	Running
 };
 
-class Behavior
+class Behaviour
 {
 	public:
-		virtual BehaviorStatus Execute() = 0;
+		virtual BehaviourStatus Execute() = 0;
 };
 
-class Sequence : public Behavior {
+class Sequence : public Behaviour {
 public:
-	Sequence(const std::vector<Behavior*>& behaviors) : m_Behaviors(behaviors) {}
+	Sequence(const std::vector<Behaviour*>& Behaviours) : m_Behaviours(Behaviours) {}
 
-	BehaviorStatus Execute() override {
-		for (Behavior* behavior : m_Behaviors) {
-			BehaviorStatus status = behavior->Execute();
-			if (status != BehaviorStatus::Success) {
+	BehaviourStatus Execute() override {
+		for (Behaviour* Behaviour : m_Behaviours) {
+			BehaviourStatus status = Behaviour->Execute();
+			if (status != BehaviourStatus::Success) {
 				return status;
 			}
 		}
-		return BehaviorStatus::Success;
+		return BehaviourStatus::Success;
 	}
 
 private:
-	std::vector<Behavior*> m_Behaviors;
+	std::vector<Behaviour*> m_Behaviours;
 };
 
 
-class MoveToPlayer : public Behavior 
+class MoveToPlayer : public Behaviour 
 {
 	public:
 		MoveToPlayer(MyEngineSystem* enemy) : m_Enemy(*enemy) {}
 		
-	BehaviorStatus Execute() override {
+	BehaviourStatus Execute() override {
 		// Implement movement logic to move towards the player
 		if (IsPlayerInRange()) {
 			// Player is already in range, no need to move
-			return BehaviorStatus::Success;
+			return BehaviourStatus::Success;
 		}
 
 		// Move towards the player
 		MoveTowardsPlayer();
 
 		// Assume the movement takes some time, so return Running status
-		return BehaviorStatus::Running;
+		return BehaviourStatus::Running;
 	}
 private:
 	MyEngineSystem m_Enemy;
@@ -78,11 +78,11 @@ private:
 	
 	
 };	
-class AttackPlayer : public Behavior {
+class AttackPlayer : public Behaviour {
 public:
-	BehaviorStatus Execute() override {
+	BehaviourStatus Execute() override {
 		// Implement attack logic on the player
-		return BehaviorStatus::Success;
+		return BehaviourStatus::Success;
 	}
 };
 
@@ -90,7 +90,7 @@ public:
 //ai contructor sets up the behaviour tree
 MyEngineSystem::MyEngineSystem()
 {
-	Behavior* m_RootBehavior = nullptr;
+	Behaviour* m_RootBehaviour = nullptr;
 
 	//m_player = player;
 	m_x = getRandom(0, 750) + 1;
@@ -106,11 +106,11 @@ MyEngineSystem::MyEngineSystem()
 	//setting up behaviours
 	MoveToPlayer* moveToPlayer = new MoveToPlayer(this);
 	AttackPlayer* attackPlayer = new AttackPlayer();
-	std::vector<Behavior*> sequenceBehaviors = { moveToPlayer , attackPlayer};
+	std::vector<Behaviour*> sequenceBehaviours = { moveToPlayer , attackPlayer};
 
 
-	Behavior* sequence = new Sequence(sequenceBehaviors);
-	 m_RootBehavior = sequence;
+	Behaviour* sequence = new Sequence(sequenceBehaviours);
+	 m_RootBehaviour = sequence;
 
 };
 
@@ -120,18 +120,18 @@ MyEngineSystem::MyEngineSystem()
 // function to update the enemy instance
 void MyEngineSystem::Update()
 {
-	// Execute the behavior tree
-	BehaviorStatus status = m_RootBehavior->Execute();
+	// Execute the Behaviour tree
+	BehaviourStatus status = m_RootBehaviour->Execute();
 
-	// Handle the behavior tree result if needed
-	if (status == BehaviorStatus::Success)
+	// Handle the Behaviour tree result if needed
+	if (status == BehaviourStatus::Success)
 	{
-		// Behavior tree execution succeeded
+		// Behaviour tree execution succeeded
 	}
-	else if (status == BehaviorStatus::Failure) {
+	else if (status == BehaviourStatus::Failure) {
 		
 	}
-	else if (status == BehaviorStatus::Running) {
+	else if (status == BehaviourStatus::Running) {
 	}
 
 

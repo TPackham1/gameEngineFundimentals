@@ -20,7 +20,7 @@ class MyEngineSystem
 			float m_x;
 			float m_y;
 			float m_attackRange;
-			Behavior* m_RootBehavior;
+			Behaviour* m_RootBehaviour;
 			
 		private:
 			//Rect m_player;
