@@ -24,7 +24,7 @@ class XCube2Engine {
 		std::shared_ptr<EventEngine> eventInstance;
 		std::shared_ptr<PhysicsEngine> physicsInstance;
 
-        std::shared_ptr<EnemyAI> myEngineSystemInstance;
+        std::shared_ptr<MySytemEngine> myEngineSystemInstance;
 
 		XCube2Engine();
 	public:
@@ -50,7 +50,7 @@ class XCube2Engine {
 		std::shared_ptr<AudioEngine> getAudioEngine() { return audioInstance; }
 		std::shared_ptr<EventEngine> getEventEngine() { return eventInstance; }
 		std::shared_ptr<PhysicsEngine> getPhysicsEngine() { return physicsInstance; }
-        std::shared_ptr<EnemyAI> getMyEngineSystem() { return myEngineSystemInstance; }
+        std::shared_ptr<MySytemEngine> getMyEngineSystem() { return myEngineSystemInstance; }
 };
 
 typedef XCube2Engine XEngine;

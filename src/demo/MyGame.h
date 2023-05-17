@@ -12,7 +12,7 @@ struct GameKey {
 
 class MyGame : public AbstractGame {
 private:
-	EnemyAI enemy;
+	MySytemEngine enemy;
 	Rect box;
 	Rect enemyBox;
 	float playerX;

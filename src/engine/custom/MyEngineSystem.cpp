@@ -34,11 +34,12 @@ private:
 	std::vector<Behavior*> m_Behaviors;
 };
 
+
 class MoveToPlayer : public Behavior 
 {
 	public:
-		MoveToPlayer(EnemyAI* enemy) : m_Enemy(enemy) {}
-
+		MoveToPlayer(MySytemEngine* enemy) : m_Enemy(enemy) {}
+		
 	BehaviorStatus Execute() override {
 		// Implement movement logic to move towards the player
 		if (IsPlayerInRange()) {
@@ -53,11 +54,16 @@ class MoveToPlayer : public Behavior
 		return BehaviorStatus::Running;
 	}
 private:
-	EnemyAI* m_Enemy;
+	MySytemEngine* m_Enemy;
 
 	bool IsPlayerInRange() {
-		return false;
-
+		float distance = std::sqrt(m_Enemy->m_dx * m_Enemy->m_dx + m_Enemy->m_dy * m_Enemy->m_dy);
+		if (distance <= m_Enemy->m_attackRange)
+		{
+			std::cout << "Tom Packham CI517 2022" << std::endl;
+			return true;
+		}
+		else { return false; }
 	}
 
 	void MoveTowardsPlayer() 
@@ -108,9 +114,11 @@ private:
 
 	};*/
 
-//ai contructor & sets up the behaviour tree
-EnemyAI::EnemyAI(float dx, float dy, float attackRange, bool playerDead)
+//ai contructor sets up the behaviour tree
+MySytemEngine::MySytemEngine(float dx, float dy, float attackRange, bool playerDead)
 {
+	Behavior* m_RootBehavior = nullptr;
+
 	//m_player = player;
 	m_x = getRandom(0, 750) + 1;
 	m_y = getRandom(0, 550) + 1;
@@ -137,21 +145,20 @@ EnemyAI::EnemyAI(float dx, float dy, float attackRange, bool playerDead)
 
 
 // function to update the enemy instance
-void EnemyAI::Update()
+void MySytemEngine::Update()
 {
 	// Execute the behavior tree
 	BehaviorStatus status = m_RootBehavior->Execute();
 
 	// Handle the behavior tree result if needed
-	// For example, you can check the status and perform actions accordingly
-	if (status == BehaviorStatus::Success) {
+	if (status == BehaviorStatus::Success)
+	{
 		// Behavior tree execution succeeded
 	}
 	else if (status == BehaviorStatus::Failure) {
-		// Behavior tree execution failed
+		
 	}
 	else if (status == BehaviorStatus::Running) {
-		// Behavior tree execution is still ongoing
 	}
 
 
