@@ -1,4 +1,4 @@
-# Install script for directory: M:/YEAR2/CI517/CW/xcube
+# Install script for directory: C:/Users/toppa/Documents/Uni/year2/CI517/Project/xcube
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "M:/YEAR2/CI517/CW/xcube/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/toppa/Documents/Uni/year2/CI517/Project/xcube/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -78,8 +78,6 @@ void AbstractGame::updatePhysics() {
 	physics->update();
 }
 
-
-
 void AbstractGame::onLeftMouseButton() {}
 void AbstractGame::onRightMouseButton() {}
 void AbstractGame::renderUI() {}
