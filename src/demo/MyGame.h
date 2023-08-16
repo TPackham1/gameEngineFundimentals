@@ -14,13 +14,14 @@ public:
 
 	Enemy(Point2 startPos, int enemySpeed);
 	void Update(const Point2& playerPos);
-
+Point2 pos;
 	/*float GetPosX();
 	float GetPosY();*/
 private:
-	Point2 pos;
+	
 	int speed;
 };
+
 class MyGame : public AbstractGame {
 	private:
 		Rect box; //player
@@ -35,6 +36,7 @@ class MyGame : public AbstractGame {
 		/* GAMEPLAY */
 		int score, numKeys, lives;
 		bool gameWon;
+		bool gameLost;
 		Enemy enemy;
 		void handleKeyEvents();
 		void update();

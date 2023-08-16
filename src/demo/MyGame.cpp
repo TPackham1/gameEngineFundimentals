@@ -3,7 +3,7 @@
 
 //Enemy *enemy;
 
-MyGame::MyGame() : AbstractGame(), score(0), lives(3), numKeys(5), gameWon(false), box(5, 5, 30, 30), enemy(Point2(400, 300), 2)
+MyGame::MyGame() : AbstractGame(), score(0), lives(3), numKeys(5), gameWon(false), box(5, 5, 30, 30), enemy(Point2(400, 300), 2), gameLost(false)
 {
 	TTF_Font * font = ResourceManager::loadFont("C:/Users/toppa/Documents/Uni/year2/CI517/Project/xcube/res/fonts/arial.ttf", 72);
 	gfx->useFont(font);
@@ -64,9 +64,21 @@ void MyGame::update() {
 	playerPosition.x = box.x;
 	playerPosition.y = box.y;
 	
-	//enemy->Update(playerPosition);
-	
-	
+	enemy.Update(playerPosition);
+
+
+	// check if the player is within a certin distance of the enemy, and weather or not it can end the game
+	float dx = enemy.pos.x - box.x;
+	float dy = enemy.pos.y - box.y;
+	float distance = sqrt(dx * dx + dy * dy);
+
+
+	if(distance<19)
+	{
+		gameLost = true;
+	}
+
+
 	// 
 	/*mySystem->Update(playerPosition);*/ // XCube doesn't like this?? why? if the enemy class is set up in the MyEngine System it has fit!
 	//
@@ -84,8 +96,8 @@ void MyGame::render() {
 
 	//rendering enemy
 
-		/*gfx->setDrawColor(SDL_COLOR_GREEN);
-		gfx->drawCircle(enemy->pos, 2);*/
+		gfx->setDrawColor(SDL_COLOR_GREEN);
+		gfx->drawCircle(enemy.pos, 10);
 	
 }
 
@@ -94,10 +106,17 @@ void MyGame::renderUI() {
 	std::string scoreStr = std::to_string(score);
 	gfx->drawText(scoreStr, 780 - scoreStr.length() * 50, 25);
 
-	if (gameWon) {
+	if (gameWon &&!gameLost) {
 		gfx->drawText("YOU WON", 250, 500);
 	}
-	
+	if(gameLost && !gameWon)
+	{
+		gfx->drawText("YOU LOST", 250, 500);
+	}
+	if (gameWon && gameLost)
+	{
+		gfx->drawText("Thomas Packham, CI517 2023", 200, 500);
+	}
 }
 
 
@@ -108,25 +127,30 @@ Enemy::Enemy(Point2 startPos, int enemySpeed)
 
 	}
 
-
+//Enemy::~Enemy() { debug("Nothing passed into contructor for Class: Enemy"); }
 
 void Enemy::Update(const Point2& playerPos) 
 	{
+	
 		// Calculate direction towards the player
 		float dx = playerPos.x - pos.x;
 		float dy = playerPos.y - pos.y;
 		float distance = sqrt(dx * dx + dy * dy);
+
 
 		// Normalize direction vector
 		if (distance != 0) {
 			dx /= distance;
 			dy /= distance;
 		}
+
+		
+
 		//debug("Moving towards the player");
 		// Move towards the player
-	/*	pos.x += dx * speed;
+		pos.x += dx * speed;
 		pos.y += dy * speed;
-	*/
+	
 
 
 	}
