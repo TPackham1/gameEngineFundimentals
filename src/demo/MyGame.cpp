@@ -1,11 +1,10 @@
 #include "MyGame.h"
 
-
 //Enemy *enemy;
 
 MyGame::MyGame() : AbstractGame(), score(0), lives(3), numKeys(5), gameWon(false), box(5, 5, 30, 30), enemy(Point2(400, 300), 2), gameLost(false)
 {
-	TTF_Font * font = ResourceManager::loadFont("C:/Users/toppa/Documents/Uni/year2/CI517/Project/xcube/res/fonts/arial.ttf", 72);
+	TTF_Font * font = ResourceManager::loadFont("../res/fonts/arial.ttf", 36);
 	gfx->useFont(font);
 	gfx->setVerticalSync(true);
 
@@ -95,9 +94,8 @@ void MyGame::render() {
 	
 
 	//rendering enemy
-
-		gfx->setDrawColor(SDL_COLOR_GREEN);
-		gfx->drawCircle(enemy.pos, 10);
+	gfx->setDrawColor(SDL_COLOR_GREEN);
+	gfx->drawCircle(enemy.pos, 10);
 	
 }
 
@@ -119,17 +117,16 @@ void MyGame::renderUI() {
 	}
 }
 
-
-Enemy::Enemy(Point2 startPos, int enemySpeed)
+	//Enemy Class
+	Enemy::Enemy(Point2 startPos, int enemySpeed)
 	{
 		debug("Enemy init");
 		pos = startPos; speed = enemySpeed;
 
 	}
 
-//Enemy::~Enemy() { debug("Nothing passed into contructor for Class: Enemy"); }
-
-void Enemy::Update(const Point2& playerPos) 
+	//Update function of the enemy 
+	void Enemy::Update(const Point2& playerPos) 
 	{
 	
 		// Calculate direction towards the player
@@ -144,9 +141,7 @@ void Enemy::Update(const Point2& playerPos)
 			dy /= distance;
 		}
 
-		
-
-		//debug("Moving towards the player");
+	
 		// Move towards the player
 		pos.x += dx * speed;
 		pos.y += dy * speed;

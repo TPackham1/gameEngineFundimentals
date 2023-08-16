@@ -8,24 +8,25 @@ struct GameKey {
 	Point2 pos;
 	bool isAlive;
 };
-class Enemy
-{
-public:
 
-	Enemy(Point2 startPos, int enemySpeed);
-	void Update(const Point2& playerPos);
-Point2 pos;
-	/*float GetPosX();
-	float GetPosY();*/
-private:
-	
-	int speed;
-};
+	class Enemy
+	{
+	public:
+
+		Enemy(Point2 startPos, int enemySpeed);
+		void Update(const Point2& playerPos);
+	Point2 pos;
+		/*float GetPosX();
+		float GetPosY();*/
+	private:
+	//	float enemyHP;
+		int speed;
+	};
 
 class MyGame : public AbstractGame {
 	private:
 		Rect box; //player
-
+		//float playerHP;
 		Vector2i velocity;
 
 		std::vector<std::shared_ptr<GameKey>> gameKeys;
@@ -35,8 +36,10 @@ class MyGame : public AbstractGame {
 
 		/* GAMEPLAY */
 		int score, numKeys, lives;
+
 		bool gameWon;
 		bool gameLost;
+
 		Enemy enemy;
 		void handleKeyEvents();
 		void update();
